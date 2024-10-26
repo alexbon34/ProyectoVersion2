@@ -20,6 +20,15 @@ graph = conectar_bd()
 def menu_principal():
     return render_template('menu_principal.html')
 
+# Ruta para el menú CRUD
+@app.route('/crud_menu')
+def crud_menu():
+    return render_template('crud_menu.html')
+
+# Ruta para volver al menú principal
+@app.route('/volver_menu_principal')
+def volver_menu_principal():
+    return redirect(url_for('menu_principal'))
 
 #CARGA DE DATOS
 @app.route('/carga_datos')
