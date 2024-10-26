@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargar Archivo Geminis API Competition</title>
+    <link rel="stylesheet" href="css/styles.css"> <!-- Vincula el archivo CSS -->
+</head>
+<body>
+
+<h1>Cargar Archivo Geminis API Competition</h1>
+
+<h2>Borrar Base de datos entera</h2>
+<form method="POST" action="{{ url_for('borrar_base_datos') }}">
+    <label for="Borrado">Eliminar BASE DE DATOS</label>
+    <button type="submit">Borrado</button>
+</form>
+
+<form method="POST" enctype="multipart/form-data" action="{{ url_for('cargar_Gemini_API') }}">
+    <label for="Gemini">Subir archivo</label>
+    <input type="file" id="Gemini" name="Gemini" accept=".csv, .xlsx"><br><br>
+    <button type="submit">Cargar Geminis</button>
+</form>
+
+<form method="POST" action="{{ url_for('cargar_relaciones') }}">
+    <button type="submit">Relaciones</button>
+</form>
+
+
+<br>
+<form method="get">
+    <button type="submit" formaction="{{ url_for('menu_principal') }}">Volver</button>
+</form>
+
+</body>
+</html>

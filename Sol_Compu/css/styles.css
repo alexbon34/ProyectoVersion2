@@ -1,0 +1,48 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Color de fondo */
+    color: #333; /* Color del texto */
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #4CAF50; /* Color del encabezado principal */
+    text-align: center;
+}
+
+h2 {
+    color: #333; /* Color del encabezado secundario */
+}
+
+form {
+    background: #fff; /* Fondo blanco para formularios */
+    padding: 20px;
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra */
+    margin-bottom: 20px; /* Espacio entre formularios */
+}
+
+label {
+    display: block;
+    margin-bottom: 10px; /* Espacio debajo de las etiquetas */
+    font-weight: bold; /* Negrita en las etiquetas */
+}
+
+input[type="file"] {
+    padding: 10px; /* Espaciado interno */
+    margin-top: 5px; /* Espacio encima del input */
+}
+
+button {
+    background-color: #4CAF50; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none; /* Sin borde */
+    padding: 10px 15px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+}
+
+button:hover {
+    background-color: #45a049; /* Color del botón al pasar el mouse */
+}

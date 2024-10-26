@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de los datos Geminis</title>
+</head>
+<body>
+    <h1>Gestión</h1> 
+    <form method="POST" action="{{ url_for('agregar_nodo_aplicaciones') }}">
+        <input type="hidden" name="action" value="none" id="action">
+        <!-- Campo ID visible pero no editable para operaciones específicas -->
+        <label for="_id">ID:</label>
+        <input type="text" id="_id" name="_id" placeholder="ID del Nodo"><br>
+        
+        <label for="title">Nombre del titulo:</label>
+        <input type="text" id="title" name="title" placeholder="Nombre del titulo" required>
+        <input type="checkbox" name="update_title_name" required><br>
+
+        <label for="What_it_Does">¿Qué es lo que hace?:</label>
+        <input type="text" id="What_it_Does" name="What_it_Does" placeholder="¿Qué es lo que hace?" required>
+        <input type="checkbox" name="update_What_it_Does" required><br>
+
+        <label for="Built_With">Construido con:</label>
+        <input type="text" id="Built_With" name="Built_With" placeholder="Construido con" required>
+        <input type="checkbox" name="update_Built_With" required><br>
+
+        <button type="submit" formaction="{{ url_for('direccionar_CRUD') }}">Agregar</button>
+        <button type="submit" formaction="{{ url_for('direccionar_CRUD') }}">Editar</button>
+        <button type="submit" formaction="{{ url_for('direccionar_CRUD') }}" >Leer</button>
+        <button type="submit" formaction="{{ url_for('direccionar_CRUD') }}">Borrar</button>
+    </form>
+  
+
+</body>
+</html>
