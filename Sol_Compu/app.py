@@ -1,6 +1,6 @@
 from flask import Flask, get_flashed_messages, jsonify, render_template, redirect, url_for, request, flash
 from conexionBD import conectar_bd 
-from py2neo import Graph, Node 
+from py2neo import Graph, Node, NodeMatcher
 import os
 import csv
 
@@ -215,6 +215,93 @@ def leer_nodo():
 @app.route('/borrar_nodo', methods=['POST'])
 def borrar_nodo():
     pass
+
+
+
+
+
+
+
+
+
+
+
+
+# Ruta para manejar el CRUD de Aplicaciones
+@app.route('/crud_aplicaciones', methods=['GET', 'POST'])
+def crud_aplicaciones():
+    if request.method == 'POST':
+        operation = request.form.get('operation')
+
+        if operation == 'Agregar':
+            title = request.form.get('title')
+            built_with = request.form.get('built_with')
+            by = request.form.get('by')
+            
+            if title and built_with and by:  # Validar que los campos estén completos
+                try:
+                    aplicacion = Node("Aplicaciones", Title=title, Built_With=built_with, By=by)
+                    graph.create(aplicacion)
+                    flash('Aplicación agregada con éxito.', 'success')
+                except Exception as e:
+                    flash(f'Parece que hubo un error: {e}', 'danger')
+            else:
+                flash('Por favor complete todos los campos antes de agregar.', 'warning')
+
+        elif operation == 'Eliminar':
+            app_id = request.form.get('app_id')
+            try:
+                graph.run("MATCH (a:Aplicaciones) WHERE id(a) = $app_id DELETE a", app_id=int(app_id))
+                flash('Aplicación eliminada con éxito.', 'success')
+            except Exception as e:
+                flash(f'Parece que hubo un error: {e}', 'danger')
+
+        elif operation == 'Consultar':
+            app_id = request.form.get('app_id')
+            try:
+                node = graph.run("MATCH (a:Aplicaciones) WHERE id(a) = $app_id RETURN a", app_id=int(app_id)).evaluate()
+                if node:
+                    return render_template('crud_aplicaciones.html', app=node)
+                else:
+                    flash('No se encontró la aplicación.', 'warning')
+            except Exception as e:
+                flash(f'Parece que hubo un error: {e}', 'danger')
+
+        elif operation == 'Actualizar':
+            app_id = request.form.get('app_id')
+            try:
+                updates = {}
+                if 'update_title' in request.form:
+                    updates['Title'] = request.form.get('title')
+                if 'update_built_with' in request.form:
+                    updates['Built_With'] = request.form.get('built_with')
+                if 'update_by' in request.form:
+                    updates['By'] = request.form.get('by')
+
+                if updates:
+                    matcher = NodeMatcher(graph)
+                    node = matcher.get(int(app_id))
+                    if node:
+                        for key, value in updates.items():
+                            node[key] = value
+                        graph.push(node)
+                        flash('Aplicación actualizada con éxito.', 'success')
+                    else:
+                        flash('No se encontró la aplicación.', 'warning')
+            except Exception as e:
+                flash(f'Parece que hubo un error: {e}', 'danger')
+
+        elif operation == 'VerTodo':
+            try:
+                apps = graph.run("MATCH (a:Aplicaciones) RETURN a").data()
+                return render_template('crud_aplicaciones.html', apps=apps)
+            except Exception as e:
+                flash(f'Parece que hubo un error: {e}', 'danger')
+
+    return render_template('crud_aplicaciones.html')
+
+
+
 
 
 

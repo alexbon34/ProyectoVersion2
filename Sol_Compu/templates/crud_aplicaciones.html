@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Aplicaciones</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="container">
+    <h1 class="mt-4">CRUD Aplicaciones</h1>
+
+    <!-- Formulario principal para todas las operaciones CRUD -->
+    <form method="post" class="mt-4">
+
+        <!-- ID de la aplicación -->
+        <div class="form-group">
+            <label for="app_id">ID Aplicación (solo para eliminar, consultar o actualizar):</label>
+            <input type="text" class="form-control" id="app_id" name="app_id">
+        </div>
+
+        <!-- Atributo Title -->
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" class="form-control" id="title" name="title">
+            <input type="checkbox" name="update_title"> Actualizar Title
+        </div>
+
+        <!-- Atributo Built_With -->
+        <div class="form-group">
+            <label for="built_with">Built_With:</label>
+            <input type="text" class="form-control" id="built_with" name="built_with">
+            <input type="checkbox" name="update_built_with"> Actualizar Built_With
+        </div>
+
+        <!-- Atributo By -->
+        <div class="form-group">
+            <label for="by">By:</label>
+            <input type="text" class="form-control" id="by" name="by">
+            <input type="checkbox" name="update_by"> Actualizar By
+        </div>
+
+        <!-- Botones para las operaciones CRUD -->
+        <button type="submit" class="btn btn-primary" name="operation" value="Agregar">Agregar</button>
+        <button type="submit" class="btn btn-danger" name="operation" value="Eliminar">Eliminar</button>
+        <button type="submit" class="btn btn-info" name="operation" value="Consultar">Consultar</button>
+        <button type="submit" class="btn btn-warning" name="operation" value="Actualizar">Actualizar</button>
+        <button type="submit" class="btn btn-secondary" name="operation" value="VerTodo">Ver Todo</button>
+
+        <!-- Botón para volver al menú CRUD -->
+        <a href="{{ url_for('crud_menu') }}" class="btn btn-dark">Volver al menú CRUD</a>
+
+    </form>
+
+    <!-- Mostrar resultados de consulta -->
+    {% if app %}
+    <h2 class="mt-4">Resultado de la consulta:</h2>
+    <ul class="list-group">
+        <li class="list-group-item">ID: {{ app.id }}</li>
+        <li class="list-group-item">Title: {{ app['Title'] }}</li>
+        <li class="list-group-item">Built_With: {{ app['Built_With'] }}</li>
+        <li class="list-group-item">By: {{ app['By'] }}</li>
+    </ul>
+    {% endif %}
+
+    <!-- Mostrar todas las aplicaciones si se selecciona Ver Todo -->
+    {% if apps %}
+    <h2 class="mt-4">Todas las Aplicaciones:</h2>
+    <ul class="list-group">
+        {% for app in apps %}
+        <li class="list-group-item">
+            ID: {{ app['a'].id }} | Title: {{ app['a']['Title'] }} | Built_With: {{ app['a']['Built_With'] }} | By: {{ app['a']['By'] }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="mt-4">
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+</div>
+
+</body>
+</html>
